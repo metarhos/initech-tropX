@@ -4,12 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
+        <module>dto</module>
+        <module>MongoRepo</module>
+        <module>generator</module>
         <module>rowsMonitoring</module>
         <module>repetitionMonitoring</module>
-        <module>generator</module>
-        <module>MongoRepo</module>
-        <module>dto</module>
-        <module>dto</module>
     </modules>
 
     <parent>
