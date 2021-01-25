@@ -1,4 +1,5 @@
 For 1st assignment algorithm is:
+
 private boolean range(MotionDTO motionDTO, SpecificationDTO specificationDTO) {
         int i = 0;
         for (double[] a : motionDTO.getMotionMatrix()) {
