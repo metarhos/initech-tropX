@@ -1,0 +1,13 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Datasource local storage ignored files
+/../../../../:\ResearchAndDevelopment\initech-tropX\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+/repetitionMonitoring/target/
+/rowsMonitoring/target/
+/dto/target/
+/.idea/
+/generator/target/
