@@ -1,5 +1,6 @@
 For 1st assignment algorithm is:
 
+public static void main(String[] args) {
 private boolean range(MotionDTO motionDTO, SpecificationDTO specificationDTO) {
         int i = 0;
         for (double[] a : motionDTO.getMotionMatrix()) {
@@ -19,6 +20,7 @@ private boolean range(MotionDTO motionDTO, SpecificationDTO specificationDTO) {
             }
         }
         return true;
+    }
     }
     
     You can find it in rowsMonitoring micriservice in RowsMonService. For start application, you just need to start RowsMonApplication, wait while spring-stream bind Karafka cloud, and after that run GeneratorApplication. This project - is Maven project, note that, when you load application in your Idea/Eclipse. I implemented workable back-end application with mongo cloud, right microservices architecture, and this appl can be scalable and usable in real project. As result of compare process, you can see LOG in Run tab, such as: 2021-01-25 10:28:27.120  INFO 13616 --- [container-0-C-1] com.tropX.service.RowsMonService         : -----Motions compliance with Range specification: true
