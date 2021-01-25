@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tropX.MotionDTO;
 import com.tropX.SpecificationDTO;
+import com.tropX.api.IStrategy;
 import com.tropX.documents.Motion;
 import com.tropX.documents.Specification;
 import com.tropX.repo.MotionRepository;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.function.Consumer;
 
 @Service
@@ -32,6 +34,9 @@ public class RowsMonService {
 
     @Autowired
     SpecificationRepository specificationRepository;
+
+    @Autowired
+    Map<String, IStrategy> strategies;
 
     ObjectMapper mapper = new ObjectMapper();
 
@@ -58,28 +63,18 @@ public class RowsMonService {
         Motion motion = convertToMotion(motionDTO);
         this.motionDTO = motionDTO;
         addMotion(motion);
-        compare(motionDTO);
-    }
 
-    private void compare(MotionDTO motionDTO) {
         Specification actualSpecification = specificationRepository.findByidExampleAndidSensor(motionDTO.getExerciseName(),motionDTO.getIdSensor());
+        SpecificationDTO actualSpecificationDTO = convertSpecificationToDTO(actualSpecification);
 
-        if(actualSpecification!=null && actualSpecification.getStrategy().equals("Range")){
-            boolean result = range(motionDTO,convertSpecificationToDTO(actualSpecification));
-            LOG.info("-----Motions compliance with Range specification: {}",result);
-            //   System.out.println("Motions compliance with Range specification: "+result);
-        }if(actualSpecification!=null && actualSpecification.getStrategy().equals("ML")) {
-            boolean result = is_correct(motionDTO, convertSpecificationToDTO(actualSpecification));
-            LOG.info("-----Motions compliance with ML specification: {}",result);
-            //   System.out.println("Motions compliance with ML specification: "+result);
-        }
+        IStrategy strategy = strategies.get(actualSpecification.getStrategy());
+        boolean result = strategy.is_correct(motionDTO, actualSpecificationDTO);
+
+        LOG.info("-----Motions compliance with {} specification: {}",actualSpecificationDTO.getStrategy(),result);
 
     }
 
-    private boolean is_correct(MotionDTO motionDTO, SpecificationDTO specification) {
-        //TODO add external library
-        return false;
-    }
+
 
     private SpecificationDTO convertSpecificationToDTO(Specification specification) {
     return new SpecificationDTO(specification.getExerciseName(),specification.getIdSensor(),
@@ -97,26 +92,5 @@ public class RowsMonService {
     }
 
 
-    // range strategy
-    private boolean range(MotionDTO motionDTO, SpecificationDTO specificationDTO) {
-        int i = 0;
-        for (double[] a : motionDTO.getMotionMatrix()) {
-            double x = a[0];
-            double y = a[1];
-            double z = a[2];
-            if (x >= specificationDTO.getSpecMatrix()[i][0] &&
-                    x <= specificationDTO.getSpecMatrix()[i][1] &&
-                    y >= specificationDTO.getSpecMatrix()[i][2] &&
-                    y <= specificationDTO.getSpecMatrix()[i][3] &&
-                    z >= specificationDTO.getSpecMatrix()[i][4] &&
-                    z <= specificationDTO.getSpecMatrix()[i][5]) {
-                i++;
-                continue;
-            } else {
-                return false;
-            }
-        }
-        return true;
-    }
 
 }

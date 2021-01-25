@@ -10,21 +10,17 @@ import java.util.Arrays;
 public class RepMonApplication {
     public static void main(String[] args) {
         SpringApplication.run(RepMonApplication.class, args);
-        //{3, 3, 2, 1, 0, 0, 1, 2, 3, 3, 2, 1, 0, 0, 1, 2, 3, 3, 2, 1, 0, 0}
-        //{-3, 0, 3, 3, 2, 0, -2, -3, -3, 0, 3, 3, 2, 0, -2, -3, -3, 0, 3, 3, 2, 0}
-        //{3, 3, 2, 1, 0, 0, 1, 2, 3}
-        //{-3, 0, 3, 3, 2, 0, -2, -3, -3}
 
         double[] continousExercise;
         double[] velocityValue;
         ArrayList<double[]> exerciseRepetitions = new ArrayList<>();
 
-//                                          |                       |                       |
-//        continousExercise = new double[]{3, 3, 2, 1, 0, 0, 1, 2, 3, 3, 2, 1, 0, 0, 1, 2, 3, 3, 2, 1, 0, 0};
-        continousExercise = new double[]{3, 3, 2, 1, 0, 0, 1, 2, 3};
-//                                       |                          |                          |
-//        velocityValue = new double[]{-3, 0, 3, 3, 2, 0, -2, -3, -3, 0, 3, 3, 2, 0, -2, -3, -3, 0, 3, 3, 2, 0};
-        velocityValue = new double[]{-3, 0, 3, 3, 2, 0, -2, -3, -3};
+
+        continousExercise = new double[]{3, 3, 2, 1, 0, 0, 1, 2, 3, 3, 2, 1, 0, 0, 1, 2, 3, 3, 2, 1, 0, 0};
+//        continousExercise = new double[]{3, 3, 2, 1, 0, 0, 1, 2, 3};
+
+        velocityValue = new double[]{-3, 0, 3, 3, 2, 0, -2, -3, -3, 0, 3, 3, 2, 0, -2, -3, -3, 0, 3, 3, 2, 0};
+//        velocityValue = new double[]{-3, 0, 3, 3, 2, 0, -2, -3, -3};
 
         if (continousExercise.length == velocityValue.length) {
             System.out.println("test data length correct");
@@ -42,15 +38,20 @@ public class RepMonApplication {
                     }
                 }
             }
-                System.out.println("Exercise end. Count of repetition: " + exerciseRepetitions.size());
-                exerciseRepetitions.forEach(element-> {
-                            for (int p = 0; p < element.length; p++) {
-                                System.out.printf(" %s", element[p]);
-                            }
-                            System.out.println();
-                        }
-                );
+        printResult(exerciseRepetitions);
+
             }
-        }
+
+    private static void printResult(ArrayList<double[]> exerciseRepetitions) {
+        System.out.println("Exercise end. Count of repetition: " + exerciseRepetitions.size());
+        exerciseRepetitions.forEach(element-> {
+                    for (int p = 0; p < element.length; p++) {
+                        System.out.printf(" %s", element[p]);
+                    }
+                    System.out.println();
+                }
+        );
+    }
+}
 
 
